@@ -73,10 +73,10 @@ export function FeatureFlagsProvider({ children }: { children: React.ReactNode }
   )
 }
 
-export function useFeatureFlags() {
+export function useFeatureFlagsContext() {
   const context = useContext(FeatureFlagsContext)
   if (!context) {
-    throw new Error('useFeatureFlags must be used within a FeatureFlagsProvider')
+    throw new Error('useFeatureFlagsContext must be used within a FeatureFlagsProvider')
   }
   return context
 }
