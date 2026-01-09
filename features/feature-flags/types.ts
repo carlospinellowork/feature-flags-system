@@ -6,5 +6,5 @@ export type FeatureFlag = {
   description?: string;
   enabled: boolean;
   rolloutPercentage?: number;
-  environments: Environment[];
+  environment: Environment;
 }
