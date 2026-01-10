@@ -1,23 +1,24 @@
 'use client'
 
 import {
-    createContext,
-    useContext,
-    useEffect,
-    useState
+  createContext,
+  useContext,
+  useEffect,
+  useState
 } from 'react'
 
 import { FeatureFlag } from '../types'
 
 const initialFlags: FeatureFlag[] = [
+
   {
-    key: 'new_dashboard',
-    name: 'New Dashboard',
-    description: 'Enable the new dashboard',
-    enabled: false,
-    rolloutPercentage: 100,
-    environment: 'development'
-  }
+  key: "dark_mode",
+  name: "Dark Mode",
+  description: "Habilita tema escuro",
+  enabled: false,
+  rolloutPercentage: 100,
+  environment: "development",
+}
 ]
 
 type FeatureFlagsContextType = {
