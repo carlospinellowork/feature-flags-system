@@ -1,10 +1,10 @@
 'use client'
 
 import {
-  createContext,
-  useContext,
-  useEffect,
-  useState
+    createContext,
+    useContext,
+    useEffect,
+    useState
 } from 'react'
 
 import { FeatureFlag } from '../types'
@@ -30,20 +30,27 @@ type FeatureFlagsContextType = {
 const FeatureFlagsContext = createContext<FeatureFlagsContextType | undefined>(undefined)
 
 export function FeatureFlagsProvider({ children }: { children: React.ReactNode }) {
-  const [flags, setFlags] = useState<FeatureFlag[]>([])
+  const [flags, setFlags] = useState<FeatureFlag[]>(initialFlags)
+  const [isMounted, setIsMounted] = useState(false)
 
   useEffect(() => {
+    setIsMounted(true)
     const storedFlags = localStorage.getItem('featureFlags')
     if (storedFlags) {
-      setFlags(JSON.parse(storedFlags))
-    } else {
-      setFlags(initialFlags)
+      try {
+        setFlags(JSON.parse(storedFlags))
+      } catch (e) {
+        console.error('Error parsing feature flags from localStorage', e)
+        setFlags(initialFlags)
+      }
     }
   }, [])
 
   useEffect(() => {
-    localStorage.setItem('featureFlags', JSON.stringify(flags))
-  }, [flags])
+    if (isMounted) {
+      localStorage.setItem('featureFlags', JSON.stringify(flags))
+    }
+  }, [flags, isMounted])
 
   const toggleFlag = (flagKey: string) => {
     setFlags((prevFlags) =>
